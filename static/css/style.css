@@ -1,0 +1,53 @@
+.important {
+	color: #19307C;
+	font-size: 30px;
+}
+
+.users {
+	font-size: 30px;
+	padding: 10px;
+
+}
+
+.container{
+	background-color: white;
+	min-height: 100%;
+}
+
+.home {
+	font-size: 20px;
+}
+
+.thumbnail {
+	width:200px;
+}
+
+.block {
+	display: block;
+}
+
+footer {
+	background-color: black;
+	color: white;
+	padding: 20px;
+	bottom: 0px;
+	margin: auto;
+	width: 100%;
+}
+
+tr {
+	display: inline;
+}
+
+h1 {
+	padding: 20px;
+	margin-right: -15px;
+	margin-left: -15px;
+	background-color: #19307C;
+	color: white;
+}
+
+html, body {
+	background-color: #19307C;
+	height: 100%;
+}

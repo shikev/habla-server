@@ -1,0 +1,5 @@
+venv/
+static/images
+static/images_backup
+*.pyc
+deploy.sh
