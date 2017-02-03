@@ -26,7 +26,7 @@ USE habla;
 CREATE TABLE `Comments` (
   `comment_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `url` varchar(500) NOT NULL,
+  `url` varchar(2000) NOT NULL,
   `originalPostTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastUpdated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
