@@ -19,12 +19,12 @@ class Comment(object):
         return self.content
 
 def getCommentsByUrl(urlIn):
-	sql = select([comments.c.content]).where(comments.c.url == urlIn)
+	sql = select([comments.c.id, comments.c.content]).where(comments.c.url == urlIn)
 	result = conn.execute(sql).fetchall()
-	result = [r[0] for r in result]
+	result = [{"id": r[0], "content": r[1]} for r in result]
 	return result
 
 def addComment(urlIn, contentIn):
 	sql = comments.insert().values({"url": urlIn, "content": contentIn})
-	conn.execute(sql)
-	return True
+	result = conn.execute(sql)
+	return {"content": contentIn, "id": result.lastrowid}

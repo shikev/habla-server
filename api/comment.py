@@ -33,7 +33,7 @@ def comment_route():
 
 		# Store both in the database
 		# If storage is successful, return success http code. 
-		comment_model.addComment(url, content)
+		comment = comment_model.addComment(url, content)
 
-		return json.jsonify({}), 200
+		return json.jsonify({"comment": comment}), 200
 		

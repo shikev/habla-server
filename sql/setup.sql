@@ -24,7 +24,7 @@ USE habla;
 --
 
 CREATE TABLE `Comments` (
-  `comment_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `content` text NOT NULL,
   `url` varchar(2000) NOT NULL,
   `originalPostTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,7 +39,7 @@ CREATE TABLE `Comments` (
 -- Indexes for table `Comments`
 --
 ALTER TABLE `Comments`
-  ADD PRIMARY KEY (`comment_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -49,4 +49,4 @@ ALTER TABLE `Comments`
 -- AUTO_INCREMENT for table `Comments`
 --
 ALTER TABLE `Comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
