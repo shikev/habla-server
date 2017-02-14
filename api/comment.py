@@ -25,7 +25,8 @@ def comment_route():
 		return json.jsonify(comments), 200
 	elif request.method == "POST":
 		# TODO advanced data processing here
-		# pull url and body from post parameters
+
+		
 		url = request.form.get('url')
 		content = request.form.get('content')
 		groupName = request.form.get('groupName')

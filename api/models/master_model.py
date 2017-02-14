@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 habla_engine = create_engine(config.db)
 
-# create a configured "Session" class
+# Create a configured "Session" class
 Session = sessionmaker(bind=habla_engine)
 
 
@@ -20,9 +20,8 @@ metadata = MetaData(bind=habla_engine)
 
 Base.prepare(habla_engine, reflect=True)
 
-# # These classes represent the tables in our database
+# These classes represent the tables in our database
 Comment = Base.classes.Comments
 Group = Base.classes.Groups
 Member = Base.classes.Members
-# GroupCommentsMap = Base.classes.GroupComments
 
