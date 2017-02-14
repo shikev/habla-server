@@ -16,10 +16,8 @@ def createGroup(username, groupName, groupPassword):
 	# Create the group
 	newGroup = Group(name=groupName, password=groupPassword, creator=username)
 	newGroup.members_collection.append(Member(username=username))
-	# Create the first member of the group (creator)
-	# newMember = Member(username=username, groupId=newGroup.id)
+
 	session.add(newGroup)
-	# session.add(newMember)
 	session.commit()
 	session.close()
 	return "success"
