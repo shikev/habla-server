@@ -1,30 +1,30 @@
 from __future__ import print_function
 import sys
-from sqlalchemy import create_engine
-from sqlalchemy import MetaData, Table
-from sqlalchemy.sql import select, insert
-# this line subject to change when deploying
-engine = create_engine('mysql://root:root@localhost:3306/habla')
+from sqlalchemy import *
+from master_model import *
 
-metadata = MetaData(engine)
-comments = Table('Comments', metadata, autoload=True)
-conn = engine.connect()
+# RETURNS: 
+# List of dictionaries. Dictionaries have keys "id" and "content"
+def getCommentsByUrl(urlIn, groupName):
 
-class Comment(object):
-    def __init__(self, content=None, url=None, postTime=None):
-        self.content = content
-        self.url = url
-        self.postTime = postTime
-    def __repr__(self):
-        return self.content
+	session = Session()
+	comments = session.query(Comment).filter_by(url=urlIn).filter(Group.name==groupName)
 
-def getCommentsByUrl(urlIn):
-	sql = select([comments.c.id, comments.c.content]).where(comments.c.url == urlIn)
-	result = conn.execute(sql).fetchall()
-	result = [{"id": r[0], "content": r[1]} for r in result]
+	result = [{"id": c.id, "content": c.content} for c in comments]
+	session.close()
 	return result
 
-def addComment(urlIn, contentIn):
-	sql = comments.insert().values({"url": urlIn, "content": contentIn})
-	result = conn.execute(sql)
-	return {"content": contentIn, "id": result.lastrowid}
+# RETURNS:
+# Dictinoary. Dictionary has keys "id" and "content"
+def addComment(urlIn, contentIn, groupName):
+	session = Session()
+	group = session.query(Group).filter_by(name=groupName).first()
+	# Create the new comment and the new group-comments mapping
+	newComment = Comment(content=contentIn, url=urlIn)
+	newComment.groups_collection.append(group)
+	newId = newComment.id
+	
+	session.add(newComment)
+	session.commit()
+	session.close()
+	return {"content": contentIn, "id": newId}

@@ -14,10 +14,10 @@ def comment_route():
 	if request.method == 'GET':
 		# get url from url params
 		url = request.args.get('url')
-
+		groupName = request.args.get('groupName')
 
 		# get all comments from database by url
-		comments = {"comments": comment_model.getCommentsByUrl(url)}
+		comments = {"comments": comment_model.getCommentsByUrl(url, groupName)}
 
 		# sort by creation date
 
@@ -26,14 +26,16 @@ def comment_route():
 	elif request.method == "POST":
 		# TODO advanced data processing here
 
-		# pull url and body from post parameters
+		
 		url = request.form.get('url')
 		content = request.form.get('content')
-		# Sanitize both for database storage
+		groupName = request.form.get('groupName')
+		
+		# Sanitize content for database storage
 
 		# Store both in the database
 		# If storage is successful, return success http code. 
-		comment = comment_model.addComment(url, content)
+		comment = comment_model.addComment(url, content, groupName)
 
 		return json.jsonify({"comment": comment}), 200
 		
