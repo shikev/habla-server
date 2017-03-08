@@ -8,8 +8,8 @@ from master_model import *
 def getCommentsByUrl(urlIn, groupName):
 
 	session = Session()
-	group = session.query(Group).filter_by(name=groupName).first()
-	comments = group.comments
+	# group = session.query(Group).filter_by(name=groupName).first()
+	comments = session.query(Comment).filter_by(url=urlIn).filter(Group.name==groupName)
 
 	# Get the admin of the group
 	group = session.query(Group).filter_by(name=groupName).first()
