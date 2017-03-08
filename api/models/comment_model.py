@@ -10,13 +10,19 @@ def getCommentsByUrl(urlIn, groupName):
 	session = Session()
 	comments = session.query(Comment).filter_by(url=urlIn).filter(Group.name==groupName)
 
+	# Get the admin of the group
+	group = session.query(Group).filter_by(name=groupName).first()
+	adminAlias = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+
 	results = []
 	# {parentId: {dict[id: children], content:"blah", poster:shikev, timestamp:number}}
 	parents = {}
 
 	for c in comments:
-		print(c, sys.stderr)
-		currentIdInfo = {"id": c.id, "content": c.content, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": c.parentId}
+		privilege = "user"
+		if c.posterName == adminAlias:
+			privilege = "admin"
+		currentIdInfo = {"id": c.id, "content": c.content, "privilege": privilege, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": c.parentId}
 
 		if c.parentId not in parents:
 			parents[c.parentId] = []
@@ -41,6 +47,12 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	session = Session()
 	group = session.query(Group).filter_by(name=groupName).first()
 
+	group = session.query(Group).filter_by(name=groupName).first()
+	adminAlias = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	privilege = "user"
+	if posterName == adminAlias:
+		privilege = "admin"
+
 	newComment = Comment(content=contentIn, url=urlIn, parentId=parentId, posterName=posterName)
 	newComment.group = group
 	newComment.user = User()
@@ -52,4 +64,4 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	newParentId = newComment.parentId
 	originalPostTime = newComment.originalPostTime
 	session.close()
-	return {"content": contentIn, "id": newId, "posterName": posterName, "timestamp": originalPostTime, "children": [], "parentId": newParentId}
+	return {"content": contentIn, "id": newId, "privilege": privilege, "posterName": posterName, "timestamp": originalPostTime, "children": [], "parentId": newParentId}
