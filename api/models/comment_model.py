@@ -49,8 +49,7 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 
 	group = session.query(Group).filter_by(name=groupName).first()
 	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
-	print(adminAlias, sys.stderr)
-	print(posterName, sys.stderr)
+
 	privilege = "user"
 	if posterName == admin.alias:
 		privilege = "admin"
