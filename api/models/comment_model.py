@@ -49,6 +49,7 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	session.commit()
 	session.refresh(newComment)
 	newId = newComment.id
-	newParentId = parentId
+	newParentId = newComment.parentId
+	originalPostTime = newComment.originalPostTime
 	session.close()
-	return {"content": contentIn, "id": newId, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": parentId}
+	return {"content": contentIn, "id": newId, "posterName": posterName, "timestamp": originalPostTime, "children": [], "parentId": newParentId}
