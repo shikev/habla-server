@@ -11,7 +11,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 
 
-habla_engine = create_engine(config.db, echo=True)
+habla_engine = create_engine(config.db)
 
 # Create a configured "Session" class
 Session = sessionmaker(bind=habla_engine)

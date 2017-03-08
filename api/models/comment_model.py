@@ -28,7 +28,9 @@ def getCommentsByUrl(urlIn, groupName):
 	# results is top level comments atm, append children!
 	for i in range(len(results)):
 		parentId = results[i]["id"]
-		results[i]["children"] = parents.get(parentId)
+		children = parents.get(parentId)
+		if children:
+			results[i]["children"] = parents.get(parentId)
 
 	session.close()
 	return results

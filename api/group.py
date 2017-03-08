@@ -18,9 +18,12 @@ def group_join_route():
 
 		# joined = "success" if success, error message if not
 		message = group_model.joinGroup(username, groupName, groupPassword)
+		errorCode = 200
+		if message != "success":
+			errorCode = 400
 
 		# TODO split http codes based on error
-		return json.jsonify({"message": message}), 200
+		return json.jsonify({"message": message}), errorCode
 		
 @groups.route('/api/v1/group/create', methods=['POST'])
 def group_create_route():
