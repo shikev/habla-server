@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys
 from flask import *
-from extensions import db
+# from extensions import db
 from extensions import crossdomain
 from models import group_model
 import urllib

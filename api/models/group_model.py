@@ -15,8 +15,12 @@ def createGroup(username, groupName, groupPassword):
 
 	# Create the group
 	newGroup = Group(name=groupName, password=groupPassword, creator=username)
-	newGroup.members_collection.append(Member(username=username))
 
+	# TODO add uuid to user
+	assoc = GroupUser(privilege="admin", alias=username)
+	assoc.user = User()
+	newGroup.users.append(assoc)
+	session.add(assoc)
 	session.add(newGroup)
 	session.commit()
 	session.close()
@@ -33,12 +37,16 @@ def joinGroup(username, groupName, groupPassword):
 		return "Group does not exist or password incorrect."
 
 	# Check if a member with this username is already in the group
-	memberExists = session.query(Member).filter_by(username=username, groupId=groupToJoin.id).all()
-	if memberExists:
+	userExistsInGroup = session.query(GroupUser).filter_by(alias=username, groupId=groupToJoin.id).all()
+	if userExistsInGroup:
 		return "Username already taken for this group!"
 
-	newMember = Member(username=username, groupId=groupToJoin.id)
-	session.add(newMember)
+	newUser = User()
+	assoc = GroupUser(privilege="user", alias=username)
+	assoc.user = newUser
+	groupToJoin.users.append(assoc)
+	session.add(assoc)
+	session.add(groupToJoin)
 	session.commit()
 	session.close()
 	return "success"

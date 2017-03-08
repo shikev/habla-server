@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys
 from flask import *
-from extensions import db
+# from extensions import db
 from extensions import crossdomain
 from models import comment_model
 import urllib
@@ -23,6 +23,7 @@ def comment_route():
 
 		# return jsonified list of comments
 		return json.jsonify(comments), 200
+		
 	elif request.method == "POST":
 		# TODO advanced data processing here
 
@@ -30,12 +31,12 @@ def comment_route():
 		url = request.form.get('url')
 		content = request.form.get('content')
 		groupName = request.form.get('groupName')
-		
+		posterName = request.form.get('username')
 		# Sanitize content for database storage
 
 		# Store both in the database
 		# If storage is successful, return success http code. 
-		comment = comment_model.addComment(url, content, groupName)
+		comment = comment_model.addComment(url, content, groupName, posterName)
 
 		return json.jsonify({"comment": comment}), 200
 		
