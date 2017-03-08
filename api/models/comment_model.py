@@ -12,7 +12,7 @@ def getCommentsByUrl(urlIn, groupName):
 
 	# Get the admin of the group
 	group = session.query(Group).filter_by(name=groupName).first()
-	adminAlias = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
 
 	results = []
 	# {parentId: {dict[id: children], content:"blah", poster:shikev, timestamp:number}}
@@ -20,7 +20,7 @@ def getCommentsByUrl(urlIn, groupName):
 
 	for c in comments:
 		privilege = "user"
-		if c.posterName == adminAlias:
+		if c.posterName == admin.alias:
 			privilege = "admin"
 		currentIdInfo = {"id": c.id, "content": c.content, "privilege": privilege, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": c.parentId}
 
@@ -48,9 +48,11 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	group = session.query(Group).filter_by(name=groupName).first()
 
 	group = session.query(Group).filter_by(name=groupName).first()
-	adminAlias = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	print(adminAlias, sys.stderr)
+	print(posterName, sys.stderr)
 	privilege = "user"
-	if posterName == adminAlias:
+	if posterName == admin.alias:
 		privilege = "admin"
 
 	newComment = Comment(content=contentIn, url=urlIn, parentId=parentId, posterName=posterName)
