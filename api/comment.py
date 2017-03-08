@@ -32,11 +32,15 @@ def comment_route():
 		content = request.form.get('content')
 		groupName = request.form.get('groupName')
 		posterName = request.form.get('username')
+		parentId = request.form.get('parentId')
+
+		if parentId == None:
+			parentId = 0
 		# Sanitize content for database storage
 
 		# Store both in the database
 		# If storage is successful, return success http code. 
-		comment = comment_model.addComment(url, content, groupName, posterName)
+		comment = comment_model.addComment(url, content, groupName, posterName, parentId)
 
 		return json.jsonify({"comment": comment}), 200
 		
