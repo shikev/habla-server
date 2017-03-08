@@ -16,7 +16,7 @@ def getCommentsByUrl(urlIn, groupName):
 
 	for c in comments:
 		print(c, sys.stderr)
-		currentIdInfo = {"id": c.id, "content": c.content, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": []}
+		currentIdInfo = {"id": c.id, "content": c.content, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": c.parentId}
 
 		if c.parentId not in parents:
 			parents[c.parentId] = []
@@ -49,5 +49,6 @@ def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	session.commit()
 	session.refresh(newComment)
 	newId = newComment.id
+	newParentId = parentId
 	session.close()
-	return {"content": contentIn, "id": newId, "posterName": c.posterName, "timestamp": c.originalPostTime}
+	return {"content": contentIn, "id": newId, "posterName": c.posterName, "timestamp": c.originalPostTime, "children": [], "parentId": parentId}
