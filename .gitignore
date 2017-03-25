@@ -3,3 +3,4 @@ static/images
 static/images_backup
 *.pyc
 deploy.sh
+config.py
