@@ -2,5 +2,5 @@ venv/
 static/images
 static/images_backup
 *.pyc
-deploy.sh
-config.py
+habla/deploy.sh
+habla/config.py
