@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys
 from flask import *
-from extensions import db
+# from extensions import db
 from extensions import crossdomain
 from models import group_model
 import urllib
@@ -18,9 +18,12 @@ def group_join_route():
 
 		# joined = "success" if success, error message if not
 		message = group_model.joinGroup(username, groupName, groupPassword)
+		errorCode = 200
+		if message != "success":
+			errorCode = 400
 
 		# TODO split http codes based on error
-		return json.jsonify({"message": message}), 200
+		return json.jsonify({"message": message}), errorCode
 		
 @groups.route('/api/v1/group/create', methods=['POST'])
 def group_create_route():
