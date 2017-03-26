@@ -1,6 +1,6 @@
 from __future__ import print_function
 import sys
-import config
+import db_config as config
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker, relationship, backref
 # from sqlalchemy.ext.automap import automap_base
