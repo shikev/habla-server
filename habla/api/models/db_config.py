@@ -1,1 +1,1 @@
-db = "mysql://root:root@localhost:3306/habla"
+db = "mysql://habla:huad2017!@habla.database.windows.net:3306/habla"

@@ -4,3 +4,4 @@ static/images_backup
 *.pyc
 habla/deploy.sh
 habla/config.py
+habla/api/models/db_config.py
