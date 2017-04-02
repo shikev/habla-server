@@ -1,1 +1,1 @@
-db = "mysql://root:root@" + MYSQLCONNSTR_localdb + "/habla"
+db = "mysql://root:root@0.0.0.0/habla"
