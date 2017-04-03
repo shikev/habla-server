@@ -1,7 +1,0 @@
-{
-	"db": {
-		"endpoint" : "habladb.cy6rmyo1guo1.us-east-1.rds.amazonaws.com:3306",
-		"user" : "habla",
-		"password" : "aGFibGEyMDE3IQ=="
-	}
-}

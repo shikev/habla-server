@@ -1,6 +1,4 @@
 from flask import Flask, render_template
-import extensions
-import controllers
 import api
 
 # Initialize Flask application with the template folder address
