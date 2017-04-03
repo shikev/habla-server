@@ -6,11 +6,12 @@ def getDB():
 		config = json.load(config_file)
 		db = config["db"]
 
-		user = db["user"]
-		pw = db["password"]
-		user = db["user"]
-		pw = base64.b64decode(db["password"])
-		endpoint = db["endpoint"]
+		user = 'habla'
+		pw = 'habla2017!'
+		endpoint = 'habladb.cy6rmyo1guo1.us-east-1.rds.amazonaws.com:3306'
+		# user = db["user"]
+		# pw = base64.b64decode(db["password"])
+		# endpoint = db["endpoint"]
 
 		db_connect = "mysql://{0}:{1}@{2}/habla".format(user, pw, endpoint)
 
