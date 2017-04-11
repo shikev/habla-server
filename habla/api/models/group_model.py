@@ -82,3 +82,13 @@ def addGroupLink(groupName, link):
 	session.close()
 	return "success"
 
+def getGroupPassword(groupName):
+	session = Session()
+	group = session.query(Group).filter_by(name=groupName).first()
+
+	if group == None:
+		session.close()
+		return None
+	password = group.password
+	session.close()
+	return password

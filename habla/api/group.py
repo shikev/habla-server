@@ -104,3 +104,13 @@ def group_links_route():
         print(request.form, sys.stderr)
         message = group_model.addGroupLink(request.form.get("groupName"), request.form.get("link"))
         return json.jsonify({"message": message}), 200
+
+@groups.route('/api/v1/group/password', methods=['GET'])
+@crossdomain(origin='*')
+def group_password_route():
+    if request.method == "GET":
+        groupName = request.args.get('groupName')
+        password = group_model.getGroupPassword(groupName)
+
+        # TODO split http codes based on error
+        return json.jsonify({"password": password}), 200

@@ -49,8 +49,7 @@ def getCommentsByUrl(urlIn, groupName):
 def addComment(urlIn, contentIn, groupName, posterName, parentId = 0):
 	session = Session()
 	group = session.query(Group).filter_by(name=groupName).first()
-
-	group = session.query(Group).filter_by(name=groupName).first()
+	
 	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
 
 	privilege = "user"
