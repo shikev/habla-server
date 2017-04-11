@@ -8,13 +8,14 @@ from master_model import *
 def getCommentsByUrl(urlIn, groupName):
 
 	session = Session()
-	# group = session.query(Group).filter_by(name=groupName).first()
-	comments = session.query(Comment).filter_by(url=urlIn).filter(Group.name==groupName)
-
-	# Get the admin of the group
 	group = session.query(Group).filter_by(name=groupName).first()
-	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	if not group:
+		return None
+	comments = session.query(Comment).filter_by(url=urlIn, groupId=group.id)
 
+	admin = session.query(GroupUser).filter_by(privilege="admin", groupId=group.id).first()
+	resultsWithPassword = {}
+	resultsWithPassword["password"] = group.password
 	results = []
 	# {parentId: {dict[id: children], content:"blah", poster:shikev, timestamp:number}}
 	parents = {}
@@ -38,9 +39,10 @@ def getCommentsByUrl(urlIn, groupName):
 		children = parents.get(parentId)
 		if children:
 			results[i]["children"] = parents.get(parentId)
-
+	resultsWithPassword["comments"] = results
 	session.close()
-	return results
+
+	return resultsWithPassword
 
 # RETURNS:
 # Dictinoary. Dictionary has keys "id" and "content"

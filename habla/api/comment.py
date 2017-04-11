@@ -64,7 +64,7 @@ def comment_route():
 		groupName = request.args.get('groupName')
 
 		# get all comments from database by url
-		comments = {"comments": comment_model.getCommentsByUrl(url, groupName)}
+		comments = comment_model.getCommentsByUrl(url, groupName)
 
 		# sort by creation date
 

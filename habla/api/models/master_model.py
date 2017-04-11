@@ -70,6 +70,7 @@ class Group(Base):
     creator        =   Column(String(32))
     password       =   Column(String(128))
     name  =   Column(String(128))
+    links = Column(Text)
 
     # Relationships
     # A group has many comments and many users

@@ -2,6 +2,7 @@ from __future__ import print_function
 import sys
 from sqlalchemy import *
 from master_model import *
+import json
 
 # RETURNS:
 # String. Contains either "success" or an error message
@@ -50,3 +51,31 @@ def joinGroup(username, groupName, groupPassword):
 	session.commit()
 	session.close()
 	return "success"
+
+def getGroupLinks(groupName):
+	session = Session()
+	group = session.query(Group).filter_by(name=groupName).first()
+
+	if group == None:
+		session.close()
+		return None
+	session.close()
+	return json.loads(group.links)
+
+
+def addGroupLink(groupName, link):
+	session = Session()
+	group = session.query(Group).filter_by(name=groupName).first()
+	if group == None:
+		return "Group does not exist!"
+
+	if group.links:
+		linkList = json.loads(group.links)
+	else:
+		linkList = []
+	linkList.append(link)
+	group.links = json.dumps(linkList)
+	session.commit()
+	session.close()
+	return "success"
+

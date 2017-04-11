@@ -87,3 +87,20 @@ def group_create_route():
 
 		# TODO split http codes based on error
 		return json.jsonify({"message": message}), 200
+
+
+
+
+@groups.route('/api/v1/group/links', methods=['GET', 'POST'])
+@crossdomain(origin='*')
+def group_links_route():
+    if request.method == "GET":
+        groupName = request.args.get('groupName')
+        links = group_model.getGroupLinks(groupName)
+
+        # TODO split http codes based on error
+        return json.jsonify({"links": links}), 200
+    elif request.method == "POST":
+        print(request.form, sys.stderr)
+        message = group_model.addGroupLink(request.form.get("groupName"), request.form.get("link"))
+        return json.jsonify({"message": message}), 200
