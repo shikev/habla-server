@@ -59,8 +59,11 @@ def getGroupLinks(groupName):
 	if group == None:
 		session.close()
 		return None
+	toRet = group.links
+	if not group.links:
+		toRet = []
 	session.close()
-	return json.loads(group.links)
+	return json.loads(toRet)
 
 
 def addGroupLink(groupName, link):
