@@ -99,7 +99,7 @@ def group_links_route():
         links = group_model.getGroupLinks(groupName)
 
         # TODO split http codes based on error
-        return json.jsonify({"links": links}), 200
+        return json.jsonify(links), 200
     elif request.method == "POST":
         print(request.form, sys.stderr)
         message = group_model.addGroupLink(request.form.get("groupName"), request.form.get("link"))

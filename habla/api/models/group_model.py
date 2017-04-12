@@ -55,19 +55,20 @@ def joinGroup(username, groupName, groupPassword):
 def getGroupLinks(groupName):
 	session = Session()
 	group = session.query(Group).filter_by(name=groupName).first()
-
+	toRet = {"links": []}
 	if group == None:
 		session.close()
 		return None
-	toRet = group.links
-	if not group.links:
-		toRet = []
+	if group.links:
+		toRet["links"] = json.loads(group.links)
 	session.close()
-	return json.loads(toRet)
+	print(sys.stderr, toRet)
+	return toRet
 
 
 def addGroupLink(groupName, link):
 	session = Session()
+
 	group = session.query(Group).filter_by(name=groupName).first()
 	if group == None:
 		return "Group does not exist!"
@@ -78,6 +79,7 @@ def addGroupLink(groupName, link):
 		linkList = []
 	linkList.append(link)
 	group.links = json.dumps(linkList)
+	print (sys.stderr, group.links)
 	session.commit()
 	session.close()
 	return "success"
